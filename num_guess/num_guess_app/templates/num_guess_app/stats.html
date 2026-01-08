@@ -1,0 +1,54 @@
+{% extends "num_guess_app/base.html" %}
+
+{% block content %}
+<h2>Game Statistics</h2>
+
+<div class="stats-card">
+    <div class="stat-item">
+        <div class="stat-value">{{ total_games }}</div>
+        <div class="stat-label">Total Games</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value">{{ won_games }}</div>
+        <div class="stat-label">Games Won</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value">{{ win_rate }}%</div>
+        <div class="stat-label">Win Rate</div>
+    </div>
+</div>
+
+{% if all_games %}
+<h3 style="color: #764ba2; margin-top: 30px;">Recent Games:</h3>
+<table class="stats-table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Range</th>
+            <th>Attempts</th>
+            <th>Result</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for game in all_games %}
+        <tr>
+            <td>{{ game.created_at|date:"M d, Y H:i" }}</td>
+            <td>{{ game.min_range }} - {{ game.max_range }}</td>
+            <td>{{ game.attempts }} / {{ game.max_attempts }}</td>
+            <td>
+                {% if game.is_won %}
+                    <span style="color: #28a745; font-weight: bold;">✓ Won</span>
+                {% else %}
+                    <span style="color: #dc3545; font-weight: bold;">✗ Lost</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p style="text-align: center; color: #666; margin-top: 30px;">
+    No finished games yet. <a href="{% url 'index' %}" style="color: #667eea;">Start playing!</a>
+</p>
+{% endif %}
+{% endblock %}

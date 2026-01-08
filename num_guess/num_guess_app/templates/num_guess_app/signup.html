@@ -1,0 +1,42 @@
+{% extends "num_guess_app/base.html" %}
+
+{% block title %}Sign Up - Number Guessing Game{% endblock %}
+
+{% block content %}
+<h2>Create an Account</h2>
+
+{% if error %}
+<div class="feedback error">{{ error }}</div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required autofocus>
+    </div>
+    
+    <div class="form-group">
+        <label for="email">Email (optional):</label>
+        <input type="email" id="email" name="email">
+    </div>
+    
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required minlength="6">
+    </div>
+    
+    <div class="form-group">
+        <label for="password_confirm">Confirm Password:</label>
+        <input type="password" id="password_confirm" name="password_confirm" required minlength="6">
+    </div>
+    
+    <button type="submit">Sign Up</button>
+</form>
+
+<div style="text-align: center; margin-top: 20px; color: #666;">
+    <p>Already have an account? <a href="{% url 'login' %}" style="color: #667eea; text-decoration: none; font-weight: 600;">Log in here</a></p>
+    <p style="margin-top: 10px;">Or <a href="{% url 'index' %}" style="color: #667eea; text-decoration: none; font-weight: 600;">play as guest</a></p>
+</div>
+{% endblock %}

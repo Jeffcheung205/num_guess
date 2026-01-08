@@ -1,0 +1,56 @@
+{% extends "num_guess_app/base.html" %}
+
+{% block content %}
+<h2>Welcome to the Number Guessing Game!</h2>
+
+{% if error %}
+<div class="feedback error">{{ error }}</div>
+{% endif %}
+
+{% if game %}
+<div class="game-info">
+    <p><strong>You have an active game!</strong></p>
+    <p>Range: {{ game.min_range }} - {{ game.max_range }}</p>
+    <p>Attempts used: {{ game.attempts }} / {{ game.max_attempts }}</p>
+    <a href="{% url 'game_play' %}"><button>Continue Game</button></a>
+    <br><br>
+    <a href="{% url 'end_game' %}"><button style="background: #dc3545;">End Current Game</button></a>
+</div>
+{% else %}
+<p style="text-align: center; color: #666; margin-bottom: 30px;">
+    I'm thinking of a number. Can you guess it?
+</p>
+
+<form method="post" action="{% url 'new_game' %}">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="min_range">Minimum Number:</label>
+        <input type="number" id="min_range" name="min_range" value="1" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="max_range">Maximum Number:</label>
+        <input type="number" id="max_range" name="max_range" value="100" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="max_attempts">Maximum Attempts:</label>
+        <input type="number" id="max_attempts" name="max_attempts" value="10" min="1" required>
+    </div>
+    
+    <button type="submit">Start New Game</button>
+</form>
+{% endif %}
+
+<div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+    <h3 style="color: #667eea; margin-bottom: 15px;">How to Play:</h3>
+    <ol style="color: #555; line-height: 2;">
+        <li>Choose your game settings (range and max attempts)</li>
+        <li>The computer will think of a number in that range</li>
+        <li>Try to guess the number!</li>
+        <li>You'll get hints if your guess is too high or too low</li>
+        <li>Win by guessing the correct number before running out of attempts!</li>
+    </ol>
+</div>
+{% endblock %}
