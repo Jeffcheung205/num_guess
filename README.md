@@ -243,6 +243,5 @@ If you have any questions or need help, please:
 
 ---
 
-**Made with ❤️ and Python**
-
 Happy Guessing! 🎲
+
